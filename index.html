@@ -19,61 +19,72 @@
       color: #333;
       padding: 0;
       margin: 0;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
     }
 
     header {
       background: linear-gradient(to right, #e74c3c, #f39c12);
       color: white;
       text-align: center;
-      padding: 20px 10px;
-    }
-
-    h1 {
-      font-size: 1.8em;
+      padding: 16px;
+      font-size: 1.4em;
       font-weight: 600;
     }
 
-    .menu {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
+    .content {
+      flex: 1;
+      overflow-y: auto;
       padding: 20px;
     }
 
-    .btn {
+    .section {
+      display: none;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    .tab-bar {
+      display: flex;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: white;
+      border-top: 1px solid #eee;
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+    }
+
+    .tab {
+      flex: 1;
+      text-align: center;
+      padding: 12px 4px;
+      font-size: 0.85em;
+      color: #777;
+      cursor: pointer;
+    }
+
+    .tab.active-tab {
+      color: #e74c3c;
+      font-weight: bold;
+    }
+
+    button, .btn {
       background: #e74c3c;
       color: white;
       border: none;
-      padding: 14px;
-      border-radius: 10px;
-      font-size: 1.1em;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 1em;
       cursor: pointer;
-      transition: background 0.3s;
-    }
-    .btn:hover {
-      background: #c0392b;
+      width: 100%;
+      margin: 8px 0;
     }
 
-    .content-section {
-      display: none;
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.4s ease, transform 0.4s ease;
-      padding: 20px;
-    }
-
-    .content-section.active {
-      display: block;
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .back-btn {
-      background: #9b59b6;
-      margin-top: 20px;
-    }
-
-    textarea, input {
+    input, textarea {
       width: 100%;
       padding: 10px;
       margin: 8px 0;
@@ -94,99 +105,200 @@
       border-radius: 6px;
       border-left: 3px solid #e74c3c;
     }
+
+    .daily-title {
+      color: #e74c3c;
+      margin: 10px 0;
+    }
   </style>
 </head>
 <body>
 
-  <!-- Main Menu -->
-  <div id="menu" class="menu active">
-    <header>
-      <h1>Patricia's Guide to Healing</h1>
-    </header>
-    <button class="btn" onclick="showSection('bible')">📖 Daily Bible Verse</button>
-    <button class="btn" onclick="showSection('prayer')">🙏 Prayer for Healing</button>
-    <button class="btn" onclick="showSection('remedies')">🌿 Herbal Remedies</button>
-    <button class="btn" onclick="showSection('log')">📝 Blood Sugar Log</button>
+  <header>Patricia's Guide to Healing</header>
+
+  <div class="content">
+    <!-- Bible Section -->
+    <div id="bible" class="section active">
+      <h2>📖 Daily Bible Verse</h2>
+      <p id="bible-verse" class="daily-title">Loading...</p>
+    </div>
+
+    <!-- Prayer Section -->
+    <div id="prayer" class="section">
+      <h2>🙏 Healing Prayer</h2>
+      <p style="margin: 16px 0; line-height: 1.6;">
+        Loving Father,<br>
+        Thank You for being my healer. I ask for Your peace over Patricia’s body,  
+        wisdom for her choices, and strength each day. Guide her steps, guard her health,  
+        and fill her heart with hope. In Jesus’ name, Amen.
+      </p>
+    </div>
+
+    <!-- Herbal Remedies -->
+    <div id="remedies" class="section">
+      <h2>🌿 Today's Herbal Remedy</h2>
+      <div id="remedy-content"></div>
+    </div>
+
+    <!-- Healthy Recipes -->
+    <div id="recipes" class="section">
+      <h2>🍲 Today's Healthy Recipe</h2>
+      <div id="recipe-content"></div>
+    </div>
+
+    <!-- Blood Sugar Log -->
+    <div id="log" class="section">
+      <h2>📝 Blood Sugar Log</h2>
+      <input type="date" id="log-date" />
+      <input type="number" id="log-value" placeholder="Enter blood sugar (mg/dL)" />
+      <button onclick="saveLog()">Save Entry</button>
+      
+      <div id="log-entries" style="margin-top: 20px;">
+        <h3>Saved Entries:</h3>
+      </div>
+    </div>
   </div>
 
-  <!-- Bible Section -->
-  <div id="bible" class="content-section">
-    <h2>🕊️ Daily Bible Verse</h2>
-    <p style="font-size: 1.2em; margin: 16px 0; line-height: 1.6;">
-      <i>"He sent his word and healed them; he rescued them from the grave."</i><br>
-      — <b>Psalm 107:20</b>
-    </p>
-    <button class="btn back-btn" onclick="showSection('menu')">← Back to Menu</button>
-  </div>
-
-  <!-- Prayer Section -->
-  <div id="prayer" class="content-section">
-    <h2>🙏 Healing Prayer</h2>
-    <p style="margin: 16px 0; line-height: 1.6;">
-      Loving Father,<br>
-      Thank You for being my healer. I ask for Your peace over Patricia’s body,  
-      wisdom for her choices, and strength each day. Guide her steps, guard her health,  
-      and fill her heart with hope. In Jesus’ name, Amen.
-    </p>
-    <button class="btn back-btn" onclick="showSection('menu')">← Back to Menu</button>
-  </div>
-
-  <!-- Remedies Section -->
-  <div id="remedies" class="content-section">
-    <h2>🌿 Herbal Remedy: Bitter Leaf Tea</h2>
-    <p><b>Helps support healthy blood sugar levels.</b></p>
-    <ol>
-      <li>Wash 1 cup of fresh bitter leaves thoroughly.</li>
-      <li>Add to 2 cups of water in a pot.</li>
-      <li>Boil gently for 10 minutes.</li>
-      <li>Let it cool to room temperature.</li>
-      <li>Drink ½ cup in the morning and ½ cup in the evening.</li>
-    </ol>
-    <p style="margin-top: 16px; font-size: 0.9em; color: #888;">
-      ⚠️ Consult your doctor before trying herbal remedies.
-    </p>
-    <button class="btn back-btn" onclick="showSection('menu')">← Back to Menu</button>
-  </div>
-
-  <!-- Blood Sugar Log -->
-  <div id="log" class="content-section">
-    <h2>📝 Blood Sugar Log</h2>
-    <input type="date" id="log-date" />
-    <input type="number" id="log-value" placeholder="Enter blood sugar (mg/dL)" />
-    <button class="btn" onclick="saveLog()">Save Entry</button>
-    
-    <div id="log-entries" style="margin-top: 20px;"></div>
-    
-    <button class="btn back-btn" onclick="showSection('menu')">← Back to Menu</button>
+  <!-- Bottom Navigation Tabs -->
+  <div class="tab-bar">
+    <div class="tab active-tab" onclick="showTab('bible')">📖<br>Bible</div>
+    <div class="tab" onclick="showTab('prayer')">🙏<br>Prayer</div>
+    <div class="tab" onclick="showTab('remedies')">🌿<br>Remedy</div>
+    <div class="tab" onclick="showTab('recipes')">🍲<br>Recipe</div>
+    <div class="tab" onclick="showTab('log')">📝<br>Log</div>
   </div>
 
   <script>
-    // Show section with smooth transition
-    function showSection(sectionId) {
-      document.querySelectorAll('.content-section, #menu').forEach(el => {
-        el.classList.remove('active');
-      });
+    // ===== DAILY CONTENT LISTS =====
+
+    // Bible Verses (365 entries — you can expand!)
+    const bibleVerses = [
+      { text: '"He sent his word and healed them; he rescued them from the grave."', ref: "Psalm 107:20" },
+      { text: '"The Lord will sustain him on his sickbed and restore him from his bed of illness."', ref: "Psalm 41:3" },
+      { text: '"By his wounds you have been healed."', ref: "1 Peter 2:24" },
+      { text: '"Do not be anxious about anything, but in every situation... present your requests to God."', ref: "Philippians 4:6" },
+      { text: '"The Lord is my strength and my shield; my heart trusts in him, and he helps me."', ref: "Psalm 28:7" },
+      { text: '"Cast all your anxiety on him because he cares for you."', ref: "1 Peter 5:7" },
+      { text: '"The Lord your God is with you, the Mighty Warrior who saves."', ref: "Zephaniah 3:17" },
+      { text: '"I will restore you to health and heal your wounds.", says the Lord."', ref: "Jeremiah 30:17" }
+      // Add more as you like! For now, it will cycle.
+    ];
+
+    // Herbal Remedies
+    const herbalRemedies = [
+      {
+        title: "Bitter Leaf Tea",
+        steps: [
+          "Wash 1 cup fresh bitter leaves.",
+          "Boil in 2 cups water for 10 mins.",
+          "Cool and drink ½ cup morning & evening."
+        ],
+        note: "Consult your doctor before use."
+      },
+      {
+        title: "Cinnamon Water",
+        steps: [
+          "Add 1 tsp cinnamon to 1 cup warm water.",
+          "Stir well and drink once daily.",
+          "May help support healthy blood sugar."
+        ],
+        note: "Avoid if on blood thinners."
+      },
+      {
+        title: "Fenugreek Soak",
+        steps: [
+          "Soak 1 tbsp fenugreek seeds overnight.",
+          "Drink the water and chew seeds in the morning.",
+          "Do this 3–4 times/week."
+        ],
+        note: "May lower blood sugar — monitor closely."
+      }
+    ];
+
+    // Diabetic-Friendly Recipes
+    const recipes = [
+      {
+        title: "Cinnamon Oatmeal (Low-Sugar)",
+        steps: [
+          "Cook ½ cup oats with water or unsweetened almond milk.",
+          "Add ½ tsp cinnamon, 2 tbsp berries, and 1 tbsp chia seeds.",
+          "No sugar needed!"
+        ]
+      },
+      {
+        title: "Bitter Leaf & Fish Soup",
+        steps: [
+          "Boil fish with onions, pepper, and scent leaves.",
+          "Add washed bitter leaves 5 mins before done.",
+          "Serve with small portion of eba or swallow."
+        ]
+      },
+      {
+        title: "Vegetable Stir-Fry",
+        steps: [
+          "Sauté onions, tomatoes, spinach, and ugu in olive oil.",
+          "Add boiled egg or grilled chicken.",
+          "Season lightly — no sugar or processed sauces."
+        ]
+      }
+    ];
+
+    // ===== HELPER: Get Day of Year (1–366) =====
+    function getDayOfYear() {
+      const now = new Date();
+      const start = new Date(now.getFullYear(), 0, 0);
+      const diff = now - start;
+      const oneDay = 1000 * 60 * 60 * 24;
+      return Math.floor(diff / oneDay);
+    }
+
+    // ===== SHOW DAILY CONTENT =====
+    function updateDailyContent() {
+      const day = getDayOfYear();
+
+      // Bible: cycle through list
+      const bibleIndex = (day - 1) % bibleVerses.length;
+      document.getElementById('bible-verse').innerHTML = 
+        `<i>"${bibleVerses[bibleIndex].text}"</i><br>— <b>${bibleVerses[bibleIndex].ref}</b>`;
+
+      // Remedy: cycle through list
+      const remedyIndex = (day - 1) % herbalRemedies.length;
+      const remedy = herbalRemedies[remedyIndex];
+      document.getElementById('remedy-content').innerHTML = `
+        <h3>${remedy.title}</h3>
+        <ol><li>${remedy.steps.join('</li><li>')}</li></ol>
+        <p style="font-size: 0.9em; color: #888; margin-top: 10px;">⚠️ ${remedy.note}</p>
+      `;
+
+      // Recipe: cycle through list
+      const recipeIndex = (day - 1) % recipes.length;
+      const recipe = recipes[recipeIndex];
+      document.getElementById('recipe-content').innerHTML = `
+        <h3>${recipe.title}</h3>
+        <ol><li>${recipe.steps.join('</li><li>')}</li></ol>
+      `;
+    }
+
+    // ===== TAB NAVIGATION =====
+    function showTab(sectionId) {
+      document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
       document.getElementById(sectionId).classList.add('active');
       
-      // Load log entries if opening log
+      document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active-tab'));
+      event.target.classList.add('active-tab');
+      
       if (sectionId === 'log') loadLog();
     }
 
-    // Blood Sugar Log Functions
+    // ===== BLOOD SUGAR LOG =====
     function saveLog() {
-      const date = document.getElementById('log-date').value;
+      const date = document.getElementById('log-date').value || new Date().toISOString().split('T')[0];
       const value = document.getElementById('log-value').value;
+      if (!value) { alert('Please enter a value.'); return; }
 
-      if (!date || !value) {
-        alert('Please enter both date and value.');
-        return;
-      }
-
-      const entry = { date, value };
       const logs = JSON.parse(localStorage.getItem('bloodSugarLogs') || '[]');
-      logs.push(entry);
+      logs.push({ date, value });
       localStorage.setItem('bloodSugarLogs', JSON.stringify(logs));
-      
       document.getElementById('log-value').value = '';
       loadLog();
     }
@@ -208,7 +320,11 @@
         container.appendChild(div);
       });
     }
-  </script>
 
+    // ===== INIT =====
+    window.onload = () => {
+      updateDailyContent(); // Set today's content
+    };
+  </script>
 </body>
 </html>

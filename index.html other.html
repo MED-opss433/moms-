@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#e74c3c">
+  <title>Patricia's Guide to Healing</title>
+  <link rel="manifest" href="/manifest.json">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: #fff9f9;
+      color: #333;
+      padding: 0;
+      margin: 0;
+    }
+
+    header {
+      background: linear-gradient(to right, #e74c3c, #f39c12);
+      color: white;
+      text-align: center;
+      padding: 20px 10px;
+    }
+
+    h1 {
+      font-size: 1.8em;
+      font-weight: 600;
+    }
+
+    .menu {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding: 20px;
+    }
+
+    .btn {
+      background: #e74c3c;
+      color: white;
+      border: none;
+      padding: 14px;
+      border-radius: 10px;
+      font-size: 1.1em;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .btn:hover {
+      background: #c0392b;
+    }
+
+    .content-section {
+      display: none;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      padding: 20px;
+    }
+
+    .content-section.active {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .back-btn {
+      background: #9b59b6;
+      margin-top: 20px;
+    }
+
+    textarea, input {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 1em;
+    }
+
+    ol, ul {
+      margin: 12px 0 12px 20px;
+      line-height: 1.6;
+    }
+
+    .log-entry {
+      background: #f8f0f0;
+      padding: 10px;
+      margin: 8px 0;
+      border-radius: 6px;
+      border-left: 3px solid #e74c3c;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Main Menu -->
+  <div id="menu" class="menu active">
+    <header>
+      <h1>Patricia's Guide to Healing</h1>
+    </header>
+    <button class="btn" onclick="showSection('bible')">📖 Daily Bible Verse</button>
+    <button class="btn" onclick="showSection('prayer')">🙏 Prayer for Healing</button>
+    <button class="btn" onclick="showSection('remedies')">🌿 Herbal Remedies</button>
+    <button class="btn" onclick="showSection('log')">📝 Blood Sugar Log</button>
+  </div>
+
+  <!-- Bible Section -->
+  <div id="bible" class="content-section">
+    <h2>🕊️ Daily Bible Verse</h2>
+    <p style="font-size: 1.2em; margin: 16px 0; line-height: 1.6;">
+      <i>"He sent his word and healed them; he rescued them from the grave."</i><br>
+      — <b>Psalm 107:20</b>
+    </p>
+    <button class="btn back-btn" onclick="showSection('menu')">← Back to Menu</button>
+  </div>
+
+  <!-- Prayer Section -->
+  <div id="prayer" class="content-section">
+    <h2>🙏 Healing Prayer</h2>
+    <p style="margin: 16px 0; line-height: 1.6;">
+      Loving Father,<br>
+      Thank You for being my healer. I ask for Your peace over Patricia’s body,  
+      wisdom for her choices, and strength each day. Guide her steps, guard her health,  
+      and fill her heart with hope. In Jesus’ name, Amen.
+    </p>
+    <button class="btn back-btn" onclick="showSection('menu')">← Back to Menu</button>
+  </div>
+
+  <!-- Remedies Section -->
+  <div id="remedies" class="content-section">
+    <h2>🌿 Herbal Remedy: Bitter Leaf Tea</h2>
+    <p><b>Helps support healthy blood sugar levels.</b></p>
+    <ol>
+      <li>Wash 1 cup of fresh bitter leaves thoroughly.</li>
+      <li>Add to 2 cups of water in a pot.</li>
+      <li>Boil gently for 10 minutes.</li>
+      <li>Let it cool to room temperature.</li>
+      <li>Drink ½ cup in the morning and ½ cup in the evening.</li>
+    </ol>
+    <p style="margin-top: 16px; font-size: 0.9em; color: #888;">
+      ⚠️ Consult your doctor before trying herbal remedies.
+    </p>
+    <button class="btn back-btn" onclick="showSection('menu')">← Back to Menu</button>
+  </div>
+
+  <!-- Blood Sugar Log -->
+  <div id="log" class="content-section">
+    <h2>📝 Blood Sugar Log</h2>
+    <input type="date" id="log-date" />
+    <input type="number" id="log-value" placeholder="Enter blood sugar (mg/dL)" />
+    <button class="btn" onclick="saveLog()">Save Entry</button>
+    
+    <div id="log-entries" style="margin-top: 20px;"></div>
+    
+    <button class="btn back-btn" onclick="showSection('menu')">← Back to Menu</button>
+  </div>
+
+  <script>
+    // Show section with smooth transition
+    function showSection(sectionId) {
+      document.querySelectorAll('.content-section, #menu').forEach(el => {
+        el.classList.remove('active');
+      });
+      document.getElementById(sectionId).classList.add('active');
+      
+      // Load log entries if opening log
+      if (sectionId === 'log') loadLog();
+    }
+
+    // Blood Sugar Log Functions
+    function saveLog() {
+      const date = document.getElementById('log-date').value;
+      const value = document.getElementById('log-value').value;
+
+      if (!date || !value) {
+        alert('Please enter both date and value.');
+        return;
+      }
+
+      const entry = { date, value };
+      const logs = JSON.parse(localStorage.getItem('bloodSugarLogs') || '[]');
+      logs.push(entry);
+      localStorage.setItem('bloodSugarLogs', JSON.stringify(logs));
+      
+      document.getElementById('log-value').value = '';
+      loadLog();
+    }
+
+    function loadLog() {
+      const logs = JSON.parse(localStorage.getItem('bloodSugarLogs') || '[]');
+      const container = document.getElementById('log-entries');
+      container.innerHTML = '<h3>Saved Entries:</h3>';
+      
+      if (logs.length === 0) {
+        container.innerHTML += '<p>No entries yet.</p>';
+        return;
+      }
+
+      logs.reverse().forEach(entry => {
+        const div = document.createElement('div');
+        div.className = 'log-entry';
+        div.innerHTML = `<b>${entry.date}</b>: ${entry.value} mg/dL`;
+        container.appendChild(div);
+      });
+    }
+  </script>
+
+</body>
+</html>
