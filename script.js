@@ -117,3 +117,12 @@ document.addEventListener('DOMContentLoaded', function () {
         entriesContainer.insertBefore(div, entriesContainer.firstChild);
     }
 });
+function showSection(sectionId) {
+  // Hide all sections
+  document.querySelectorAll('.content-section').forEach(section => {
+    section.classList.remove('active');
+  });
+  
+  // Show the selected one
+  document.getElementById(sectionId).classList.add('active');
+}

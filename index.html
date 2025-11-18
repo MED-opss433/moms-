@@ -1,179 +1,214 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Patricia's Guide to Healing</title>
-    <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#e74c3c">
+  <title>Patricia's Guide to Healing</title>
+  <link rel="manifest" href="/manifest.json">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: #fff9f9;
+      color: #333;
+      padding: 0;
+      margin: 0;
+    }
+
+    header {
+      background: linear-gradient(to right, #e74c3c, #f39c12);
+      color: white;
+      text-align: center;
+      padding: 20px 10px;
+    }
+
+    h1 {
+      font-size: 1.8em;
+      font-weight: 600;
+    }
+
+    .menu {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding: 20px;
+    }
+
+    .btn {
+      background: #e74c3c;
+      color: white;
+      border: none;
+      padding: 14px;
+      border-radius: 10px;
+      font-size: 1.1em;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .btn:hover {
+      background: #c0392b;
+    }
+
+    .content-section {
+      display: none;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      padding: 20px;
+    }
+
+    .content-section.active {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .back-btn {
+      background: #9b59b6;
+      margin-top: 20px;
+    }
+
+    textarea, input {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 1em;
+    }
+
+    ol, ul {
+      margin: 12px 0 12px 20px;
+      line-height: 1.6;
+    }
+
+    .log-entry {
+      background: #f8f0f0;
+      padding: 10px;
+      margin: 8px 0;
+      border-radius: 6px;
+      border-left: 3px solid #e74c3c;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1><i class="fas fa-heartbeat"></i> Patricia's Guide to Healing</h1>
-            <div class="welcome-message">
-                <p>Dearest Mom, I created this special app just for you! ❤️ Remember, you're stronger than diabetes, and I'm always cheering you on. Stay consistent with your care, and know that I love you more than words can say. — Medicia</p>
-            </div>
-        </header>
 
-        <div class="card">
-            <h2><i class="fas fa-utensils"></i> Foods to Avoid</h2>
-            <div class="food-list">
-                <div class="food-item">
-                    <i class="fas fa-ban"></i>
-                    <span>Sugary snacks (candies, pastries)</span>
-                </div>
-                <div class="food-item">
-                    <i class="fas fa-ban"></i>
-                    <span>White bread & refined grains</span>
-                </div>
-                <div class="food-item">
-                    <i class="fas fa-ban"></i>
-                    <span>Fried foods</span>
-                </div>
-                <div class="food-item">
-                    <i class="fas fa-ban"></i>
-                    <span>Sweetened cereals</span>
-                </div>
-                <div class="food-item">
-                    <i class="fas fa-ban"></i>
-                    <span>Processed meats</span>
-                </div>
-                <div class="food-item">
-                    <i class="fas fa-ban"></i>
-                    <span>High-sugar fruits (mangoes, grapes)</span>
-                </div>
-            </div>
-        </div>
+  <!-- Main Menu -->
+  <div id="menu" class="menu active">
+    <header>
+      <h1>Patricia's Guide to Healing</h1>
+    </header>
+    <button class="btn" onclick="showSection('bible')">📖 Daily Bible Verse</button>
+    <button class="btn" onclick="showSection('prayer')">🙏 Prayer for Healing</button>
+    <button class="btn" onclick="showSection('remedies')">🌿 Herbal Remedies</button>
+    <button class="btn" onclick="showSection('log')">📝 Blood Sugar Log</button>
+  </div>
 
-        <div class="card">
-            <h2><i class="fas fa-coffee"></i> Drinks to Avoid</h2>
-            <div class="drink-list">
-                <div class="drink-item">
-                    <i class="fas fa-ban"></i>
-                    <span>Sugary sodas</span>
-                </div>
-                <div class="drink-item">
-                    <i class="fas fa-ban"></i>
-                    <span>Fruit juices</span>
-                </div>
-                <div class="drink-item">
-                    <i class="fas fa-ban"></i>
-                    <span>Energy drinks</span>
-                </div>
-                <div class="drink-item">
-                    <i class="fas fa-ban"></i>
-                    <span>Sweetened coffee drinks</span>
-                </div>
-                <div class="drink-item">
-                    <i class="fas fa-ban"></i>
-                    <span>Alcoholic beverages</span>
-                </div>
-                <div class="drink-item">
-                    <i class="fas fa-ban"></i>
-                    <span>Sports drinks</span>
-                </div>
-            </div>
-        </div>
+  <!-- Bible Section -->
+  <div id="bible" class="content-section">
+    <h2>🕊️ Daily Bible Verse</h2>
+    <p style="font-size: 1.2em; margin: 16px 0; line-height: 1.6;">
+      <i>"He sent his word and healed them; he rescued them from the grave."</i><br>
+      — <b>Psalm 107:20</b>
+    </p>
+    <button class="btn back-btn" onclick="showSection('menu')">← Back to Menu</button>
+  </div>
 
-        <div class="card">
-            <h2><i class="fas fa-utensil-spoon"></i> Healthy Recipe Ideas</h2>
-            <div class="recipe-ideas">
-                <div class="recipe-card">
-                    <h3>Avocado & Egg Breakfast Bowl</h3>
-                    <p>Scrambled eggs with avocado, spinach, and cherry tomatoes</p>
-                </div>
-                <div class="recipe-card">
-                    <h3>Grilled Salmon with Veggies</h3>
-                    <p>Salmon with roasted broccoli, carrots, and quinoa</p>
-                </div>
-                <div class="recipe-card">
-                    <h3>Greek Yogurt Parfait</h3>
-                    <p>Plain Greek yogurt with berries and chia seeds</p>
-                </div>
-                <div class="recipe-card">
-                    <h3>Vegetable Stir Fry</h3>
-                    <p>Tofu with mixed vegetables in light soy sauce over brown rice</p>
-                </div>
-            </div>
-        </div>
+  <!-- Prayer Section -->
+  <div id="prayer" class="content-section">
+    <h2>🙏 Healing Prayer</h2>
+    <p style="margin: 16px 0; line-height: 1.6;">
+      Loving Father,<br>
+      Thank You for being my healer. I ask for Your peace over Patricia’s body,  
+      wisdom for her choices, and strength each day. Guide her steps, guard her health,  
+      and fill her heart with hope. In Jesus’ name, Amen.
+    </p>
+    <button class="btn back-btn" onclick="showSection('menu')">← Back to Menu</button>
+  </div>
 
-        <!-- DAILY REMINDERS + DAILY BIBLE (now combined) -->
-        <div class="card">
-            <h2><i class="fas fa-bell"></i> Today’s Reminders & Encouragement</h2>
-            
-            <div class="daily-bible" id="daily-bible-section">
-                <!-- Filled by JavaScript -->
-            </div>
+  <!-- Remedies Section -->
+  <div id="remedies" class="content-section">
+    <h2>🌿 Herbal Remedy: Bitter Leaf Tea</h2>
+    <p><b>Helps support healthy blood sugar levels.</b></p>
+    <ol>
+      <li>Wash 1 cup of fresh bitter leaves thoroughly.</li>
+      <li>Add to 2 cups of water in a pot.</li>
+      <li>Boil gently for 10 minutes.</li>
+      <li>Let it cool to room temperature.</li>
+      <li>Drink ½ cup in the morning and ½ cup in the evening.</li>
+    </ol>
+    <p style="margin-top: 16px; font-size: 0.9em; color: #888;">
+      ⚠️ Consult your doctor before trying herbal remedies.
+    </p>
+    <button class="btn back-btn" onclick="showSection('menu')">← Back to Menu</button>
+  </div>
 
-            <div class="reminder-list" style="margin-top: 25px;">
-                <div class="reminder-item">
-                    <i class="fas fa-pray"></i>
-                    <div>
-                        <h3>Prayer Time</h3>
-                        <p>Daily at sunrise</p>
-                    </div>
-                </div>
-                <div class="reminder-item">
-                    <i class="fas fa-running"></i>
-                    <div>
-                        <h3>Exercise</h3>
-                        <p>Monday & Thursday mornings (7–8 AM)</p>
-                    </div>
-                </div>
-                <div class="reminder-item">
-                    <i class="fas fa-tint"></i>
-                    <div>
-                        <h3>Blood Sugar Check</h3>
-                        <p>Before breakfast, 2 hours after meals, and before bed</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+  <!-- Blood Sugar Log -->
+  <div id="log" class="content-section">
+    <h2>📝 Blood Sugar Log</h2>
+    <input type="date" id="log-date" />
+    <input type="number" id="log-value" placeholder="Enter blood sugar (mg/dL)" />
+    <button class="btn" onclick="saveLog()">Save Entry</button>
+    
+    <div id="log-entries" style="margin-top: 20px;"></div>
+    
+    <button class="btn back-btn" onclick="showSection('menu')">← Back to Menu</button>
+  </div>
 
-        <div class="card">
-            <h2><i class="fas fa-tachometer-alt"></i> Blood Sugar Tracker</h2>
-            <div class="blood-sugar-form">
-                <input type="number" id="blood-sugar-input" placeholder="Enter your blood sugar reading (mg/dL)" />
-                <button id="add-entry">Add Entry</button>
-            </div>
-            <div class="blood-sugar-entries" id="entries-container">
-                <!-- Entries will appear here -->
-            </div>
-        </div>
+  <script>
+    // Show section with smooth transition
+    function showSection(sectionId) {
+      document.querySelectorAll('.content-section, #menu').forEach(el => {
+        el.classList.remove('active');
+      });
+      document.getElementById(sectionId).classList.add('active');
+      
+      // Load log entries if opening log
+      if (sectionId === 'log') loadLog();
+    }
 
-        <div class="card">
-            <h2><i class="fas fa-seedling"></i> Herbal Remedies for Diabetes</h2>
-            <div class="herbal-remedies">
-                <div class="herbal-item">
-                    <i class="fas fa-mug-hot"></i>
-                    <h3>Cinnamon Tea</h3>
-                    <p>Helps lower blood sugar levels</p>
-                </div>
-                <div class="herbal-item">
-                    <i class="fas fa-leaf"></i>
-                    <h3>Fenugreek Seeds</h3>
-                    <p>Soak overnight and consume in morning</p>
-                </div>
-                <div class="herbal-item">
-                    <i class="fas fa-tree"></i>
-                    <h3>Aloe Vera Juice</h3>
-                    <p>1–2 tbsp daily (consult doctor first)</p>
-                </div>
-                <div class="herbal-item">
-                    <i class="fas fa-apple-alt"></i>
-                    <h3>Bitter Melon</h3>
-                    <p>Can be consumed as juice or cooked</p>
-                </div>
-            </div>
-        </div>
+    // Blood Sugar Log Functions
+    function saveLog() {
+      const date = document.getElementById('log-date').value;
+      const value = document.getElementById('log-value').value;
 
-        <footer>
-            <p>Created with love by Medicia for her amazing mom Patricia ❤️</p>
-            <p>Today’s strength is given for today!</p>
-        </footer>
-    </div>
+      if (!date || !value) {
+        alert('Please enter both date and value.');
+        return;
+      }
 
-    <script src="script.js"></script>
+      const entry = { date, value };
+      const logs = JSON.parse(localStorage.getItem('bloodSugarLogs') || '[]');
+      logs.push(entry);
+      localStorage.setItem('bloodSugarLogs', JSON.stringify(logs));
+      
+      document.getElementById('log-value').value = '';
+      loadLog();
+    }
+
+    function loadLog() {
+      const logs = JSON.parse(localStorage.getItem('bloodSugarLogs') || '[]');
+      const container = document.getElementById('log-entries');
+      container.innerHTML = '<h3>Saved Entries:</h3>';
+      
+      if (logs.length === 0) {
+        container.innerHTML += '<p>No entries yet.</p>';
+        return;
+      }
+
+      logs.reverse().forEach(entry => {
+        const div = document.createElement('div');
+        div.className = 'log-entry';
+        div.innerHTML = `<b>${entry.date}</b>: ${entry.value} mg/dL`;
+        container.appendChild(div);
+      });
+    }
+  </script>
+
 </body>
 </html>
