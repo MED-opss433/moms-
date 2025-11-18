@@ -62,7 +62,7 @@
       flex: 1;
       text-align: center;
       padding: 12px 4px;
-      font-size: 0.8em;
+      font-size: 0.85em;
       color: #777;
       cursor: pointer;
     }
@@ -110,29 +110,6 @@
       color: #e74c3c;
       margin: 10px 0;
     }
-
-    /* Home Message Style */
-    .home-message {
-      text-align: center;
-      padding: 30px 20px;
-      line-height: 1.7;
-      font-size: 1.2em;
-    }
-
-    .home-message h2 {
-      color: #e74c3c;
-      margin-bottom: 20px;
-      font-size: 1.5em;
-    }
-
-    .home-message p {
-      margin: 12px 0;
-    }
-
-    .heart {
-      color: #e74c3c;
-      font-size: 1.4em;
-    }
   </style>
 </head>
 <body>
@@ -140,22 +117,8 @@
   <header>Patricia's Guide to Healing</header>
 
   <div class="content">
-    <!-- Home Section -->
-    <div id="home" class="section active">
-      <div class="home-message">
-        <h2>❤️ Welcome, Mom!</h2>
-        <p>I love you so much.</p>
-        <p>I made this app just for you —</p>
-        <p>to guide your steps,</p>
-        <p>comfort your heart,</p>
-        <p>and remind you that you're never alone.</p>
-        <p><b>With all my love,</b></p>
-        <p>— Medicia 💖</p>
-      </div>
-    </div>
-
     <!-- Bible Section -->
-    <div id="bible" class="section">
+    <div id="bible" class="section active">
       <h2>📖 Daily Bible Verse</h2>
       <p id="bible-verse" class="daily-title">Loading...</p>
     </div>
@@ -198,8 +161,7 @@
 
   <!-- Bottom Navigation Tabs -->
   <div class="tab-bar">
-    <div class="tab active-tab" onclick="showTab('home')">❤️<br>Home</div>
-    <div class="tab" onclick="showTab('bible')">📖<br>Bible</div>
+    <div class="tab active-tab" onclick="showTab('bible')">📖<br>Bible</div>
     <div class="tab" onclick="showTab('prayer')">🙏<br>Prayer</div>
     <div class="tab" onclick="showTab('remedies')">🌿<br>Remedy</div>
     <div class="tab" onclick="showTab('recipes')">🍲<br>Recipe</div>
@@ -208,6 +170,8 @@
 
   <script>
     // ===== DAILY CONTENT LISTS =====
+
+    // Bible Verses (365 entries — you can expand!)
     const bibleVerses = [
       { text: '"He sent his word and healed them; he rescued them from the grave."', ref: "Psalm 107:20" },
       { text: '"The Lord will sustain him on his sickbed and restore him from his bed of illness."', ref: "Psalm 41:3" },
@@ -217,8 +181,10 @@
       { text: '"Cast all your anxiety on him because he cares for you."', ref: "1 Peter 5:7" },
       { text: '"The Lord your God is with you, the Mighty Warrior who saves."', ref: "Zephaniah 3:17" },
       { text: '"I will restore you to health and heal your wounds.", says the Lord."', ref: "Jeremiah 30:17" }
+      // Add more as you like! For now, it will cycle.
     ];
 
+    // Herbal Remedies
     const herbalRemedies = [
       {
         title: "Bitter Leaf Tea",
@@ -249,6 +215,7 @@
       }
     ];
 
+    // Diabetic-Friendly Recipes
     const recipes = [
       {
         title: "Cinnamon Oatmeal (Low-Sugar)",
@@ -276,7 +243,7 @@
       }
     ];
 
-    // ===== HELPER: Get Day of Year =====
+    // ===== HELPER: Get Day of Year (1–366) =====
     function getDayOfYear() {
       const now = new Date();
       const start = new Date(now.getFullYear(), 0, 0);
@@ -288,10 +255,13 @@
     // ===== SHOW DAILY CONTENT =====
     function updateDailyContent() {
       const day = getDayOfYear();
+
+      // Bible: cycle through list
       const bibleIndex = (day - 1) % bibleVerses.length;
       document.getElementById('bible-verse').innerHTML = 
         `<i>"${bibleVerses[bibleIndex].text}"</i><br>— <b>${bibleVerses[bibleIndex].ref}</b>`;
 
+      // Remedy: cycle through list
       const remedyIndex = (day - 1) % herbalRemedies.length;
       const remedy = herbalRemedies[remedyIndex];
       document.getElementById('remedy-content').innerHTML = `
@@ -300,6 +270,7 @@
         <p style="font-size: 0.9em; color: #888; margin-top: 10px;">⚠️ ${remedy.note}</p>
       `;
 
+      // Recipe: cycle through list
       const recipeIndex = (day - 1) % recipes.length;
       const recipe = recipes[recipeIndex];
       document.getElementById('recipe-content').innerHTML = `
@@ -352,7 +323,7 @@
 
     // ===== INIT =====
     window.onload = () => {
-      updateDailyContent(); // Load today's content
+      updateDailyContent(); // Set today's content
     };
   </script>
 </body>
