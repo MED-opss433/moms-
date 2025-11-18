@@ -1,0 +1,304 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+:root {
+    --primary: #e91e63;       /* Pink */
+    --secondary: #f06292;     /* Lighter pink */
+    --accent: #ff5252;        /* Bright red */
+    --light: #fce4ec;         /* Very light pink background */
+    --dark: #880e4f;          /* Deep pink for text */
+    --danger: #d32f2f;        /* Red for warnings */
+    --warning: #ffb3b3;
+    --info: #ff80ab;
+}
+
+body {
+    background: linear-gradient(135deg, #ffebee, #f8bbd0);
+    color: #333;
+    min-height: 100vh;
+    padding-bottom: 30px;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    background: linear-gradient(to right, var(--primary), var(--secondary));
+    color: white;
+    border-radius: 20px;
+    padding: 25px;
+    margin-bottom: 25px;
+    text-align: center;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    position: relative;
+    overflow: hidden;
+}
+
+header::before {
+    content: "";
+    position: absolute;
+    top: -50px;
+    right: -50px;
+    width: 150px;
+    height: 150px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 50%;
+}
+
+header h1 {
+    font-size: 2.2rem;
+    margin-bottom: 10px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.welcome-message {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 15px;
+    border-radius: 15px;
+    margin-top: 15px;
+    font-style: italic;
+    line-height: 1.6;
+}
+
+.card {
+    background: white;
+    border-radius: 20px;
+    padding: 25px;
+    margin-bottom: 25px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.card h2 {
+    color: var(--dark);
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 3px solid var(--secondary);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.card h2 i {
+    background: var(--secondary);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.food-list,
+.drink-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.food-item,
+.drink-item {
+    background: var(--light);
+    padding: 12px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-left: 4px solid var(--danger);
+}
+
+.recipe-ideas {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    margin-top: 15px;
+}
+
+.recipe-card {
+    background: var(--light);
+    padding: 15px;
+    border-radius: 15px;
+    border-top: 4px solid var(--primary);
+}
+
+.reminder-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.reminder-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 12px;
+    background: var(--light);
+    border-radius: 12px;
+    border-left: 4px solid var(--accent);
+}
+
+.blood-sugar-form {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.blood-sugar-form input,
+.blood-sugar-form button {
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    font-size: 1.1rem;
+}
+
+.blood-sugar-form input {
+    font-size: 1.1rem;
+}
+
+.blood-sugar-form button {
+    background: var(--primary);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.blood-sugar-form button:hover {
+    background: var(--dark);
+}
+
+.blood-sugar-entries {
+    margin-top: 20px;
+    max-height: 200px;
+    overflow-y: auto;
+    padding: 10px;
+    background: #fdf2f7;
+    border-radius: 10px;
+}
+
+.entry {
+    padding: 10px;
+    border-bottom: 1px solid #f0e6ef;
+    display: flex;
+    justify-content: space-between;
+}
+
+.bible-section {
+    margin-top: 15px;
+    padding: 15px;
+    background: linear-gradient(to right, #ffebee, #f8bbd0);
+    border-radius: 15px;
+    font-style: italic;
+    position: relative;
+}
+
+.bible-section::before {
+    content: """;
+    position: absolute;
+    top: -20px;
+    left: 10px;
+    font-size: 60px;
+    color: rgba(233, 30, 99, 0.2);
+    font-family: Georgia, serif;
+}
+
+.prayer {
+    margin-top: 15px;
+    font-style: normal;
+    font-weight: 500;
+    color: var(--dark);
+}
+
+.herbal-remedies {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.herbal-item {
+    background: #fff0f5;
+    padding: 15px;
+    border-radius: 12px;
+    text-align: center;
+    border: 1px solid #f8bbd0;
+}
+
+.herbal-item i {
+    font-size: 2.5rem;
+    color: var(--primary);
+    margin-bottom: 10px;
+}
+
+footer {
+    text-align: center;
+    margin-top: 30px;
+    color: var(--dark);
+    font-weight: 500;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 15px;
+    border: 1px solid var(--secondary);
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .food-list,
+    .drink-list,
+    .recipe-ideas,
+    .herbal-remedies {
+        grid-template-columns: 1fr;
+    }
+
+    .blood-sugar-form {
+        grid-template-columns: 1fr;
+    }
+
+    header h1 {
+        font-size: 1.8rem;
+    }
+}
+.daily-bible {
+    background: linear-gradient(to right, #fff0f5, #ffebee);
+    padding: 20px;
+    border-radius: 15px;
+    border-left: 4px solid var(--primary);
+    margin-bottom: 20px;
+    font-style: italic;
+    position: relative;
+}
+
+.daily-bible::before {
+    content: """;
+    position: absolute;
+    top: -15px;
+    left: 10px;
+    font-size: 50px;
+    color: rgba(233, 30, 99, 0.15);
+    font-family: Georgia, serif;
+}
+
+.daily-prayer {
+    margin-top: 15px;
+    font-style: normal;
+    font-weight: 500;
+    color: var(--dark);
+    padding-top: 10px;
+    border-top: 1px dashed #f8bbd0;
+}
